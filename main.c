@@ -1,11 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "node.h"
-#include <stdio.h>
-#include<string.h>
-#include <ctype.h>
 
-#define size 26
+
+#define sizeABC 26
 
 void Ex1();
 void Ex2();
@@ -13,7 +11,7 @@ void Ex3();
 void Ex4();
 void Ex5();
 char** exOneLogic(char c, int* arrayLength);
-char* exTwoLogic(char* str);
+char* newString(char* str, int size);
 void commonestLetter(int* chars, char filename[]);
 char getThechar(int* arr, int len);
 void decorder(char* str);
@@ -65,6 +63,7 @@ void Ex1() {
 	char** arr;
 	printf("split by: \n");
 
+	gets();
 	//get input char
 	c_small = tolower(getchar());
 
@@ -82,36 +81,29 @@ void Ex1() {
 }
 //Ex2
 void Ex2() {
-	int strLength = 0;
-	char* strNew = NULL;
-	char* str = (char*)malloc(sizeof(char) * 101);
-
-	// get input
-	printf("Enter input MAX 100\n");
-	gets(str);
-	//gets(str);
-	//scanf("%s",str);
-	strLength = strlen(str);
-	strNew = exTwoLogic(str);
-
-	// print new string 
-	printf("new stirng:");
-	puts(strNew);
-	printf("\n");
-
-	free(strNew);
-	free(str);
-
+	char str1[50];
+	char* str2;
+	int strl, res, i, j = 0;
+	printf("Enter string max size 50: ");
+	gets();
+	gets(str1);
+	strl = strlen(str1);
+	str2 = newString(str1, strl);
+	printf("Original String is:");
+	puts(str1);
+	printf("The updated String  is:");
+	puts(str2);
+	free(str2);
 }
 
 //Ex3
 void Ex3() {
 	char ch;
-	int chars[size] = { 0 };
+	int chars[sizeABC] = { 0 };
 	 commonestLetter(&chars, "input.txt");
-	ch = getThechar(chars, size);
+	ch = getThechar(chars, sizeABC);
 		if (ch)
-			printf("The most usefull char in text is: %c", ch);
+			printf("The most usefull char in text is: %c \n", ch);
 		else
 			printf("No letters in the file");
 }
@@ -120,6 +112,7 @@ void Ex4() {
 	char str[100];
 	char* massege;
 	printf("enter the decoded mesage:\n");
+	gets();
 	gets(str);
 	decorder(str);
 }
@@ -129,10 +122,10 @@ void Ex5() {
 	int size_t;
 	char* filename = (char *)malloc(100);
 	char* decleration = (char *)malloc(100);
-
+	gets();
 	printf("Enter file name\n");
 	gets(filename);
-
+	gets();
 	printf("Enter the decleration\n");
 	gets(decleration);
 
@@ -221,38 +214,19 @@ char** exOneLogic(char c, int* arrayLength) {
 	return arr;
 }
 
-char* exTwoLogic(char* str) {
-	char* strNew = NULL;
+char* newString(char* str, int size) {
 	int i = 0, j = 0;
-	int count = 0;
-
-
-	for (i = 0; str[i] != '\0'; i++) {
-		if (str[i] != 32)
-			if (str[i] > 57 || str[i] < 48) {
-				count++;
-			}
+	char* strNeo = calloc(sizeof(char), (size + 1));
+	for (i = 0; i < size; i++) {
+		if (!(((str[i] > '0') && (str[i] < '9')) || str[i] == ' ')) {
+			strNeo[j] = str[i];
+			j++;
+		}
 	}
-
-	// create new string / array
-	strNew = (char*)malloc(sizeof(char) * (count + 1));
-
-	// build new string
-	for (i = 0; i < str[i] != '\0'; i++) {
-		if (str[i] != 32)
-			if (str[i] > 57 || str[i] < 48) {
-				strNew[j] = str[i];
-				j++;
-			}
-	}
-	// end string
-	if (count > 0)
-		strNew[j] = '\0';
-
-	return strNew;
-
+	strNeo[j + 1] = '\0';
+	strNeo = (char*)realloc(strNeo, (j + 1));
+	return strNeo;
 }
-
 // counting sort alorithmic for looking most usefull char
 void commonestLetter(int* chars, char filename[]) {
 	char ch;
