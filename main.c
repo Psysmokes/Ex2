@@ -1,7 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "node.h"
-
+// Create by Eguene Sergienko ID 314076571 61108-61 && 
+//Alex Kovalyov ID 321866477 61108-63
 
 #define sizeABC 26
 
@@ -19,6 +20,8 @@ void declerationFILE(char* str, char* filename);
 int doestlomglong(char* str);
 int getVar(char* str);
 int isPointer(char* str);
+
+
 
 
 
@@ -128,9 +131,6 @@ void Ex5() {
 	gets();
 	printf("Enter the decleration\n");
 	gets(decleration);
-
-
-
 	declerationFILE(decleration, filename);
 	free(filename);
 	free(decleration);
@@ -410,3 +410,4 @@ int isPointer(char* str) {
 
 	return str[0] == '*';
 }
+
